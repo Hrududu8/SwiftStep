@@ -12,6 +12,8 @@
 		96576A2219886EDC00097652 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96576A2019886EDC00097652 /* Main.storyboard */; };
 		96576A2419886EDC00097652 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96576A2319886EDC00097652 /* Images.xcassets */; };
 		96576A3019886EDD00097652 /* SwiftStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96576A2F19886EDD00097652 /* SwiftStepTests.swift */; };
+		96576A3B19886F1D00097652 /* testClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 96576A3A19886F1D00097652 /* testClass.m */; };
+		D1212DD6D31B484C8AE3480B /* libPods-SwiftStep.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 979A8D2997594A58BB09D3DD /* libPods-SwiftStep.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,11 @@
 		96576A2919886EDD00097652 /* SwiftStepTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftStepTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96576A2E19886EDD00097652 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96576A2F19886EDD00097652 /* SwiftStepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftStepTests.swift; sourceTree = "<group>"; };
+		96576A3919886F1D00097652 /* SwiftStep-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftStep-Bridging-Header.h"; sourceTree = "<group>"; };
+		96576A3A19886F1D00097652 /* testClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = testClass.m; path = ../testClass.m; sourceTree = "<group>"; };
+		96576A3C19886F3800097652 /* testClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = testClass.h; path = ../testClass.h; sourceTree = "<group>"; };
+		979A8D2997594A58BB09D3DD /* libPods-SwiftStep.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SwiftStep.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1E477F41D4143C6994515D3 /* Pods-SwiftStep.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftStep.xcconfig"; path = "Pods/Pods-SwiftStep.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1212DD6D31B484C8AE3480B /* libPods-SwiftStep.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +68,9 @@
 				96576A1919886EDC00097652 /* SwiftStep */,
 				96576A2C19886EDD00097652 /* SwiftStepTests */,
 				96576A1819886EDC00097652 /* Products */,
+				96576A3919886F1D00097652 /* SwiftStep-Bridging-Header.h */,
+				A1E477F41D4143C6994515D3 /* Pods-SwiftStep.xcconfig */,
+				CECAB409D234467A80A3FB5A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -75,6 +86,8 @@
 		96576A1919886EDC00097652 /* SwiftStep */ = {
 			isa = PBXGroup;
 			children = (
+				96576A3C19886F3800097652 /* testClass.h */,
+				96576A3A19886F1D00097652 /* testClass.m */,
 				96576A1C19886EDC00097652 /* AppDelegate.swift */,
 				96576A1E19886EDC00097652 /* ViewController.swift */,
 				96576A2019886EDC00097652 /* Main.storyboard */,
@@ -109,6 +122,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CECAB409D234467A80A3FB5A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				979A8D2997594A58BB09D3DD /* libPods-SwiftStep.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -116,9 +137,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 96576A3319886EDD00097652 /* Build configuration list for PBXNativeTarget "SwiftStep" */;
 			buildPhases = (
+				48F0E8D394FC417FBDF45489 /* Check Pods Manifest.lock */,
 				96576A1319886EDC00097652 /* Sources */,
 				96576A1419886EDC00097652 /* Frameworks */,
 				96576A1519886EDC00097652 /* Resources */,
+				6E70BA7B1A664C26B4857FA0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,11 +226,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		48F0E8D394FC417FBDF45489 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		6E70BA7B1A664C26B4857FA0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-SwiftStep-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		96576A1319886EDC00097652 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96576A3B19886F1D00097652 /* testClass.m in Sources */,
 				96576A1F19886EDC00097652 /* ViewController.swift in Sources */,
 				96576A1D19886EDC00097652 /* AppDelegate.swift in Sources */,
 			);
@@ -324,23 +381,30 @@
 		};
 		96576A3419886EDD00097652 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1E477F41D4143C6994515D3 /* Pods-SwiftStep.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SwiftStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftStep-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		96576A3519886EDD00097652 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1E477F41D4143C6994515D3 /* Pods-SwiftStep.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SwiftStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftStep-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -397,6 +461,7 @@
 				96576A3519886EDD00097652 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		96576A3619886EDD00097652 /* Build configuration list for PBXNativeTarget "SwiftStepTests" */ = {
 			isa = XCConfigurationList;
@@ -405,6 +470,7 @@
 				96576A3819886EDD00097652 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

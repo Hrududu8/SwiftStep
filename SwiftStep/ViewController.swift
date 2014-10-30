@@ -222,7 +222,7 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         gLayer.locations = [0.0, 1.0]
         aView.layer.insertSublayer(gLayer, atIndex: 1)
         return aView
-
+//change
 }
 
 //- (UIView *)barChartView:(JBBarChartView *)barChartView barViewAtIndex:(NSUInteger)index;

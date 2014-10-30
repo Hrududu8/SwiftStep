@@ -132,7 +132,7 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
         // Build up the data collection
         
         
-        //NSAssert([self.delegate respondsToSelector:@selector(barChartView:heightForBarViewAtAtIndex:)], @"JBBarChartView // delegate must implement - (CGFloat)barChartView:(JBBarChartView *)barChartView heightForBarViewAtAtIndex:(NSUInteger)index");
+        NSAssert([self.delegate respondsToSelector:@selector(barChartView:heightForBarViewAtAtIndex:)], @"JBBarChartView // delegate must implement - (CGFloat)barChartView:(JBBarChartView *)barChartView heightForBarViewAtAtIndex:(NSUInteger)index");
         
         NSMutableDictionary *dataDictionary = [NSMutableDictionary dictionary];
         for (NSUInteger index=0; index<dataCount; index++)
@@ -163,7 +163,7 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
      * Creates a new bar graph view using the previously calculated data model
      */
     dispatch_block_t createBars = ^{
-        
+        NSLog(@"hello from %@",[NSThread currentThread]);
         // Remove old bars
         for (UIView *barView in self.barViews)
         {
@@ -201,10 +201,17 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
 
             CGFloat height = [self normalizedHeightForRawHeight:[self.chartDataDictionary objectForKey:key]];
             CGFloat extensionHeight = height > 0.0 ? kJBBarChartViewPopOffset : 0.0;
-            barView.frame = CGRectMake(xOffset, self.bounds.size.height - height - self.footerView.frame.size.height, [self barWidth], height + extensionHeight);
+            // FIXME: this is the broken line
+            //RK:  this is the line that sets the frame size of each bar?
+            //try breaking the next line up into small bits so you can see whats causing the problem
+            CGFloat x = xOffset;
+            CGFloat y = self.bounds.size.height - height - self.footerView.frame.size.height;
+            CGFloat width = [self barWidth];
+            CGFloat myHeight = height + extensionHeight;
+            barView.frame = CGRectMake(x, y , width, myHeight);
+            NSLog(@"%@", NSStringFromCGRect(barView.frame));
             [mutableBarViews addObject:barView];
-			
-            // Add new bar
+			// Add new bar
             if (self.footerView)
 			{
 				[self insertSubview:barView belowSubview:self.footerView];
@@ -224,7 +231,7 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
      * Creates a vertical selection view for touch events
      */
     dispatch_block_t createSelectionView = ^{
-        
+        NSLog(@"hello from %@",[NSThread currentThread]);
         // Remove old selection bar
         if (self.verticalSelectionView)
         {
@@ -349,8 +356,15 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
             for (UIView *barView in self.barViews)
             {
                 if (state == JBChartViewStateExpanded)
-                {
-                    barView.frame = CGRectMake(barView.frame.origin.x, (self.bounds.size.height + kJBBarChartViewPopOffset) - (barView.frame.size.height + self.footerView.frame.size.height), barView.frame.size.width, barView.frame.size.height);
+        {
+                    CGFloat myX = barView.frame.origin.x;
+                    CGFloat myY = (self.bounds.size.height + kJBBarChartViewPopOffset) - (barView.frame.size.height + self.footerView.frame.size.height);
+                    CGFloat myW = barView.frame.size.width;
+                    CGFloat myH = barView.frame.size.height;
+                    barView.frame = CGRectMake(myX, myY, myW, myH);
+                    
+                    //RK took the next line out
+                    //                    barView.frame = CGRectMake(barView.frame.origin.x, (self.bounds.size.height + kJBBarChartViewPopOffset) - (barView.frame.size.height + self.footerView.frame.size.height), barView.frame.size.width, barView.frame.size.height);
                 }
                 else if (state == JBChartViewStateCollapsed)
                 {

@@ -158,7 +158,11 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         }
     }
     func barChartView(barChartView: JBBarChartView!, heightForBarViewAtAtIndex index: UInt) -> CGFloat {
-        return CGFloat(myData.stepValues[Int(index)])
+        // FIXME: RETURN TO NORMAL WHEN DONE
+        //return CGFloat(myData.stepValues[Int(index)])
+        var dataArray = [100.0, 5000.0, 5500.0, 9000.0, 12000.0, 19000.0, 2200.0]
+        let someData = CGFloat(dataArray[Int(index)])
+        return someData
     }
     override init(){
         super.init()
@@ -202,6 +206,27 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
 }
             return barColor
 }
+//this is the problem function
+// FIXME: this is the ->UIView function that breaks it
+    func barChartView(barChartView: JBBarChartView!, barViewAtIndex index: UInt) -> UIView! {
+        let colorTop = UIColor(red:192.0/255.0, green: 38.0/255.0, blue: 42.0/255.0, alpha: 1.0).CGColor
+        let colorBottom = UIColor(red: 35.0/255.0, green: 2.0/255.0, blue:2.0/255.0, alpha:1.0).CGColor
+        
+        var aView = UIView()
+        aView.frame = barChartView.bounds
+        aView.backgroundColor = UIColor.blueColor()
+        var gLayer = CAGradientLayer()
+        gLayer.frame = aView.bounds // is is this that is causing the problem?
+        let c:[AnyObject] = [colorTop,colorBottom]
+        gLayer.colors = c
+        gLayer.locations = [0.0, 1.0]
+        aView.layer.insertSublayer(gLayer, atIndex: 1)
+        return aView
+
+}
+
+//- (UIView *)barChartView:(JBBarChartView *)barChartView barViewAtIndex:(NSUInteger)index;
+
 
 
     override func viewDidLoad() { //maybe we should move the initialization of the data structures to the app delegate code??

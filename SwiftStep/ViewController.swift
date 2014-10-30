@@ -84,8 +84,8 @@ coder.encodeObject(self.todayAtMidnight, forKey:"todayAtMidnight")
             
             components.day--
             var newDay = myCalender.dateByAddingComponents(components, toDate: day , options: nil)
-            self.listOfDates.append(newDay)
-            self.thisWeeksData[newDay] = getData(newDay)          }
+            self.listOfDates.append(newDay!)
+            self.thisWeeksData[newDay!] = getData(newDay!)          }
     }
     func getTodayAtMidnight()->(NSDate){
         let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
@@ -125,7 +125,7 @@ coder.encodeObject(self.todayAtMidnight, forKey:"todayAtMidnight")
 
 extension UIViewController {
     func waitForOrientationChange(){
-        var thisDevice = UIDevice.currentDevice()!
+        var thisDevice = UIDevice.currentDevice()
         thisDevice.beginGeneratingDeviceOrientationNotifications()
         let myNotificationCenter = NSNotificationCenter.defaultCenter()
         myNotificationCenter.addObserver(
@@ -145,14 +145,14 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
     func swapControllersIfNeeded(){
         let deviceOrientation = UIDevice.currentDevice().orientation
         if(UIDeviceOrientationIsLandscape(deviceOrientation) && self.isViewLoaded()){
-            self.landscapeViewController = self.storyboard.instantiateViewControllerWithIdentifier("LandscapeViewController")
+            self.landscapeViewController = self.storyboard!.instantiateViewControllerWithIdentifier("LandscapeViewController")
              as LandscapeViewController
             self.landscapeViewController.myData = self.myData
-            self.navigationController.pushViewController(self.landscapeViewController, animated: true)
-            self.navigationController.setNavigationBarHidden(true, animated: false)
+            self.navigationController!.pushViewController(self.landscapeViewController, animated: true)
+            self.navigationController!.setNavigationBarHidden(true, animated: false)
         }
         if(UIDeviceOrientationIsPortrait(deviceOrientation) && (self.isViewLoaded())){
-            self.navigationController.popToRootViewControllerAnimated(false)
+            self.navigationController!.popToRootViewControllerAnimated(false)
             println("popped")
             self.displayMyChart()
         }
@@ -177,7 +177,7 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
 
     
     func numberOfBarsInBarChartView(barChartView: JBBarChartView!)->UInt{
-        if(myData.stepData.count<7){
+       if(myData.stepData.count<7){
             return UInt(myData.stepValues.count)
         } else {
             return UInt(kNumberOfDaysToDisplayInPortraitView)
@@ -214,9 +214,11 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         
         var aView = UIView()
         aView.frame = barChartView.bounds
+        println("in barViewAtIndex: aView.frame = \(aView.frame)")
         aView.backgroundColor = UIColor.blueColor()
         var gLayer = CAGradientLayer()
         gLayer.frame = aView.bounds // is is this that is causing the problem?
+        println("in barviewAtIndex; glayer.frame = \(gLayer.frame)")
         let c:[AnyObject] = [colorTop,colorBottom]
         gLayer.colors = c
         gLayer.locations = [0.0, 1.0]

@@ -209,7 +209,7 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
             CGFloat width = [self barWidth];
             CGFloat myHeight = height + extensionHeight;
             barView.frame = CGRectMake(x, y , width, myHeight);
-            NSLog(@"in create bars %@", NSStringFromCGRect(barView.frame));
+            NSLog(@"in create bars; barViewFrame %@", NSStringFromCGRect(barView.frame));
             [mutableBarViews addObject:barView];
 			// Add new bar
             if (self.footerView)
@@ -224,10 +224,14 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
             xOffset += ([self barWidth] + self.barPadding);
             index++;
             //some RK stuff // you are here // you need to figure out what the frame of the gradient layer is
+            for (CALayer *layer in barView.layer.sublayers) {
+                layer.frame = barView.bounds;
+            }
+            
             NSArray* mySubViews = barView.layer.sublayers;
-            CALayer *mySubLayer = CALayer(mySubViews[0]);
+            CALayer *mySubLayer = mySubViews[0];
             CGRect myRect = mySubLayer.frame;
-            NSLog(@"my subLayer frame = %@",myRect)  ;
+            NSLog(@"in create bars my subLayer frame = %@",NSStringFromCGRect(myRect))  ;
             
         }
         self.barViews = [NSArray arrayWithArray:mutableBarViews];

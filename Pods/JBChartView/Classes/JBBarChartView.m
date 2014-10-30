@@ -163,7 +163,7 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
      * Creates a new bar graph view using the previously calculated data model
      */
     dispatch_block_t createBars = ^{
-        NSLog(@"hello from %@",[NSThread currentThread]);
+        
         // Remove old bars
         for (UIView *barView in self.barViews)
         {
@@ -209,7 +209,7 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
             CGFloat width = [self barWidth];
             CGFloat myHeight = height + extensionHeight;
             barView.frame = CGRectMake(x, y , width, myHeight);
-            NSLog(@"%@", NSStringFromCGRect(barView.frame));
+            NSLog(@"in create bars %@", NSStringFromCGRect(barView.frame));
             [mutableBarViews addObject:barView];
 			// Add new bar
             if (self.footerView)
@@ -223,6 +223,12 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
             
             xOffset += ([self barWidth] + self.barPadding);
             index++;
+            //some RK stuff // you are here // you need to figure out what the frame of the gradient layer is
+            NSArray* mySubViews = barView.layer.sublayers;
+            CALayer *mySubLayer = CALayer(mySubViews[0]);
+            CGRect myRect = mySubLayer.frame;
+            NSLog(@"my subLayer frame = %@",myRect)  ;
+            
         }
         self.barViews = [NSArray arrayWithArray:mutableBarViews];
     };

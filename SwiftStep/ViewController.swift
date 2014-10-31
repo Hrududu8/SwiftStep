@@ -37,11 +37,8 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
     }
     convenience required init(coder decoder: NSCoder){//lessons learned:  you have to restore all the data from the file because the convenience init calls self.init BEFORE any the data is restore and self.init is where the computed property -- in this case stepValues was first created.  
         self.init()
-        println("convenience init called")
-        self.aWord = decoder.decodeObjectForKey("aWord") as String
         if let unwrappedDictionary: AnyObject = decoder.decodeObjectForKey("thisWeeksData") {
             self.thisWeeksData = unwrappedDictionary as Dictionary
-            println("decoder 1 ran")
                 }
         if let unwrappedArrayOfDates: AnyObject = decoder.decodeObjectForKey("listOfDates") {
             self.listOfDates = unwrappedArrayOfDates as Array
@@ -49,12 +46,10 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
 
         if let unwrappedDate: AnyObject = decoder.decodeObjectForKey("todayAtMidnight") {
             self.todayAtMidnight = unwrappedDate as NSDate
-            println("decoder 2 ran")
             }
         
         if let anotherUnWrappedDictionary: AnyObject = decoder.decodeObjectForKey("stepData"){
             self.stepData = anotherUnWrappedDictionary as Dictionary
-            println("last decoder ran")
                 }
         if let unwrappedArray: AnyObject = decoder.decodeObjectForKey("stepValues"){
             self.stepValues = unwrappedArray as Array
@@ -158,12 +153,8 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         }
     }
     func barChartView(barChartView: JBBarChartView!, heightForBarViewAtAtIndex index: UInt) -> CGFloat {
-        // FIXME: RETURN TO NORMAL WHEN DONE
-        //return CGFloat(myData.stepValues[Int(index)])
-        var dataArray = [100.0, 5000.0, 5500.0, 9000.0, 12000.0, 19000.0, 2200.0]
-        let someData = CGFloat(dataArray[Int(index)])
-        return someData
-    }
+        return CGFloat(myData.stepValues[Int(index)])
+        }
     override init(){
         super.init()
             }
@@ -206,28 +197,22 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
 }
             return barColor
 }
-//this is the problem function
-// FIXME: this is the ->UIView function that breaks it
     func barChartView(barChartView: JBBarChartView!, barViewAtIndex index: UInt) -> UIView! {
         let colorTop = UIColor(red:192.0/255.0, green: 38.0/255.0, blue: 42.0/255.0, alpha: 1.0).CGColor
         let colorBottom = UIColor(red: 35.0/255.0, green: 2.0/255.0, blue:2.0/255.0, alpha:1.0).CGColor
         
         var aView = UIView()
         aView.frame = barChartView.bounds
-        println("in barViewAtIndex: aView.frame = \(aView.frame)")
-        aView.backgroundColor = UIColor.blueColor()
         var gLayer = CAGradientLayer()
-        gLayer.frame = aView.bounds // is is this that is causing the problem?
-        println("in barviewAtIndex; glayer.frame = \(gLayer.frame)")
+        gLayer.frame = aView.bounds
         let c:[AnyObject] = [colorTop,colorBottom]
         gLayer.colors = c
         gLayer.locations = [0.0, 1.0]
         aView.layer.insertSublayer(gLayer, atIndex: 1)
         return aView
-//change
+
 }
 
-//- (UIView *)barChartView:(JBBarChartView *)barChartView barViewAtIndex:(NSUInteger)index;
 
 
 
@@ -265,11 +250,7 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         let myFileManager = NSFileManager()
         var path = documentDir.stringByAppendingPathComponent("SwiftStep.archive")
         if(myFileManager.fileExistsAtPath(path)==true){
-            println("the file exists")
             self.myData = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as SwiftStepDataModel
-            println("the path is \(path)")
-            println("the word is \(self.myData.aWord)")
-            println("the array is \(self.myData.stepValues)")
             return true
         }
         return false

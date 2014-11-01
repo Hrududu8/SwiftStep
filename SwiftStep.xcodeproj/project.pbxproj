@@ -13,6 +13,7 @@
 		96576A2419886EDC00097652 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96576A2319886EDC00097652 /* Images.xcassets */; };
 		96576A3019886EDD00097652 /* SwiftStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96576A2F19886EDD00097652 /* SwiftStepTests.swift */; };
 		96576A3B19886F1D00097652 /* testClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 96576A3A19886F1D00097652 /* testClass.m */; };
+		96E0AF141A05485A00DF47FA /* SwiftStepDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E0AF131A05485A00DF47FA /* SwiftStepDataModel.swift */; };
 		D1212DD6D31B484C8AE3480B /* libPods-SwiftStep.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 979A8D2997594A58BB09D3DD /* libPods-SwiftStep.a */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		96576A3919886F1D00097652 /* SwiftStep-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftStep-Bridging-Header.h"; sourceTree = "<group>"; };
 		96576A3A19886F1D00097652 /* testClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = testClass.m; path = ../testClass.m; sourceTree = "<group>"; };
 		96576A3C19886F3800097652 /* testClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = testClass.h; path = ../testClass.h; sourceTree = "<group>"; };
+		96E0AF131A05485A00DF47FA /* SwiftStepDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftStepDataModel.swift; sourceTree = "<group>"; };
 		979A8D2997594A58BB09D3DD /* libPods-SwiftStep.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SwiftStep.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1E477F41D4143C6994515D3 /* Pods-SwiftStep.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftStep.xcconfig"; path = "Pods/Pods-SwiftStep.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +92,7 @@
 				96576A3A19886F1D00097652 /* testClass.m */,
 				96576A1C19886EDC00097652 /* AppDelegate.swift */,
 				96576A1E19886EDC00097652 /* ViewController.swift */,
+				96E0AF131A05485A00DF47FA /* SwiftStepDataModel.swift */,
 				96576A2019886EDC00097652 /* Main.storyboard */,
 				96576A2319886EDC00097652 /* Images.xcassets */,
 				96576A1A19886EDC00097652 /* Supporting Files */,
@@ -267,6 +270,7 @@
 				96576A3B19886F1D00097652 /* testClass.m in Sources */,
 				96576A1F19886EDC00097652 /* ViewController.swift in Sources */,
 				96576A1D19886EDC00097652 /* AppDelegate.swift in Sources */,
+				96E0AF141A05485A00DF47FA /* SwiftStepDataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

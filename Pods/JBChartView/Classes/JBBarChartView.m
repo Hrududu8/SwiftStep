@@ -196,7 +196,7 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
                     backgroundColor = kJBBarChartViewDefaultBarColor;
                 }
 
-                barView.backgroundColor = backgroundColor;
+                barView.backgroundColor = backgroundColor;  //FIXME: this lines throws an exception
             }
 
             CGFloat height = [self normalizedHeightForRawHeight:[self.chartDataDictionary objectForKey:key]];

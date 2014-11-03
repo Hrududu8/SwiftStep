@@ -127,7 +127,8 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         default:
             UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0) /*#486721*/
         }
-        return color
+        let tempColor = UIColor.redColor()
+        return tempColor
         
     }
 
@@ -140,7 +141,6 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
        myChart.delegate = self
         myChart.minimumValue = 100 //FIXME:  this is providing the user with fake data!
        let colorBackground = UIColor(red:0.341, green: 0.373, blue:0.369, alpha:1.0) /*#830b11*/
-        myChart.backgroundColor = colorBackground
         
         let myNotificationCenter = NSNotificationCenter.defaultCenter()
         myNotificationCenter.addObserver(
@@ -149,7 +149,8 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
             name: UIApplicationWillResignActiveNotification,
             object: nil
         ) //need to add memory warning and terminate notifications
-       self.displayMyChart()
+       myChart.backgroundColor = colorBackground
+        self.displayMyChart()
        self.view.addSubview(myChart)
        self.waitForOrientationChange()
 

@@ -15,7 +15,10 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
     var todayAtMidnight = NSDate()
     var stepData = [NSDate: Double]()
     var stepValues = [Double]()
-    var aWord = "Given"
+    var weeklyAverage: Double {
+        let totalStepsThisWeek = stepValues.reduce(0, +)
+        return totalStepsThisWeek/7
+    }
     
     override init(){
         super.init()
@@ -52,7 +55,6 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         
     }
     func encodeWithCoder(coder: NSCoder){
-        coder.encodeObject(aWord, forKey:"aWord")
         coder.encodeObject(self.thisWeeksData, forKey:"thisWeeksData")
         coder.encodeObject(self.listOfDates, forKey:"listOfDates")
         
@@ -89,10 +91,11 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         return myCalendar.dateFromComponents(midnightComponents)!
     }
     func getData(day: NSDate)->(Double){
+        //FIXME: fake data
         //this will eventually be where the query to CoreMotion goes
         
         //this is a stub
-        return Double(arc4random()) % 20000
+        return Double(arc4random()) % 12000
     }
     func getNDaysOfDataAsArray(numberOfDays: Int)->[Double]{
         var dates = stepData.keys

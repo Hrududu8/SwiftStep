@@ -75,42 +75,63 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         println("print orientation changed")
         return
     }
-    func barChartView(barChartView: JBBarChartView!, colorForBarViewAtIndex index: UInt) -> UIColor! {
-            var barColor = UIColor()
-            let totalSteps = myData.stepValues.reduce(0, combine: +)
-            let counter = Float(myData.stepValues.count)
-            let averageSteps = totalSteps/Double(counter)
-            let halfAverage = averageSteps/2
-            switch myData.stepValues[Int(index)] {
-                case 0..<halfAverage:
-                barColor = UIColor.redColor()
-                case halfAverage..<averageSteps:
-                barColor = UIColor.orangeColor()
-                case averageSteps...15000:
-                barColor = UIColor.greenColor()
-                default:
-                barColor = UIColor.blueColor()
-}
-            return barColor
-}
+    /*
     func barChartView(barChartView: JBBarChartView!, barViewAtIndex index: UInt) -> UIView! {
-        let colorTop = UIColor(red:192.0/255.0, green: 38.0/255.0, blue: 42.0/255.0, alpha: 1.0).CGColor
-        let colorBottom = UIColor(red: 35.0/255.0, green: 2.0/255.0, blue:2.0/255.0, alpha:1.0).CGColor
+        //initialize colors
         
+        let colorBrightRed = UIColor(red: 0.965, green: 0.224, blue: 0.086, alpha: 1.0).CGColor  /*#f63916*/
+        let colorRed = UIColor(red: 0.647, green: 0.031, blue: 0.071, alpha: 1.0).CGColor /*#a50812*/
+        let colorOrange = UIColor(red: 0.8, green: 0.306, blue: 0.114, alpha: 1.0).CGColor /*#cc4e1d*/
+        let colorGreen = UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0).CGColor /*#486721*/
+        
+        //create gradient
         var aView = UIView()
         aView.frame = barChartView.bounds
         var gLayer = CAGradientLayer()
         gLayer.frame = aView.bounds
-        let c:[AnyObject] = [colorTop,colorBottom]
+        var c = [AnyObject]()
+        
+        
+        var threshold = myData.weeklyAverage < 10000 ? myData.weeklyAverage : 10000
+        
+        switch myData.stepValues[Int(index)] {
+        case 0...2000:
+            c = [colorRed, colorBrightRed]
+            gLayer.locations = [0.2, 0.5]
+        case 2001..<threshold:
+            c = [colorOrange, colorRed, colorBrightRed]
+            gLayer.locations = [0.2, 0.4, 0.8]
+        case threshold...10000:
+            c = [colorGreen, colorOrange, colorRed, colorBrightRed]
+            gLayer.locations = [0.2, 0.4, 0.6, 0.8]
+        default:
+            c = [colorGreen, colorOrange, colorRed, colorBrightRed]
+            gLayer.locations = [0.2, 0.4, 0.6, 0.8]
+        }
         gLayer.colors = c
-        gLayer.locations = [0.0, 1.0]
         aView.layer.insertSublayer(gLayer, atIndex: 1)
         return aView
 
 }
+*/
+    func barChartView(barChartView: JBBarChartView!, colorForBarViewAtIndex index: UInt) -> UIColor! {
+        var color = UIColor()
+        let threshold = myData.weeklyAverage < 10000 ? myData.weeklyAverage : 10000
+        switch myData.stepValues[Int(index)] {
+        case 0...2000:
+            color = UIColor(red: 0.965, green: 0.224, blue: 0.086, alpha: 1.0)  /*#f63916*/
+        case 2001..<threshold:
+            color = UIColor(red: 0.647, green: 0.031, blue: 0.071, alpha: 1.0) /*#a50812*/
+        case threshold...10000:
+            color = UIColor(red: 0.8, green: 0.306, blue: 0.114, alpha: 1.0) /*#cc4e1d*/
+        default:
+            UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0) /*#486721*/
+        }
+        return color
+        
+    }
 
-
-
+ 
 
     override func viewDidLoad() { //maybe we should move the initialization of the data structures to the app delegate code??
        super.viewDidLoad()
@@ -118,7 +139,9 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
        myChart.dataSource = self
        myChart.delegate = self
         myChart.minimumValue = 100 //FIXME:  this is providing the user with fake data!
-       
+       let colorBackground = UIColor(red:0.341, green: 0.373, blue:0.369, alpha:1.0) /*#830b11*/
+        myChart.backgroundColor = colorBackground
+        
         let myNotificationCenter = NSNotificationCenter.defaultCenter()
         myNotificationCenter.addObserver(
             self,

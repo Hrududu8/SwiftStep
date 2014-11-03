@@ -32,21 +32,73 @@ progressCircle.strokeEnd = 0.83;
 
 circle // after stroke end extended
 
-let colorTop = UIColor(red: 23.0/255.0, green: 93.0/255.0, blue: 25.0/255.0, alpha: 1.0).CGColor
-let colorMiddle = UIColor.orangeColor().CGColor
-let colorBottom = UIColor(red:192.0/255.0, green: 38.0/255.0, blue: 42.0/255.0, alpha: 1.0).CGColor
+class stepBars: UIView {
+    
+    let colorBrightRed = UIColor(red: 0.965, green: 0.224, blue: 0.086, alpha: 1.0).CGColor  /*#f63916*/
+    let colorRed = UIColor(red: 0.647, green: 0.031, blue: 0.071, alpha: 1.0).CGColor /*#a50812*/
+    let colorOrange = UIColor(red: 0.8, green: 0.306, blue: 0.114, alpha: 1.0).CGColor /*#cc4e1d*/
+    let colorGreen = UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0).CGColor /*#486721*/
+    let colorBackground = UIColor(red:0.415, green: 0.055, blue:0.078, alpha:1.0) /*#6a0e14*/
+    
+    override init(frame: CGRect){
+        super.init(frame:frame)
+        self.backgroundColor = colorBackground
+        var gLayer = CAGradientLayer()
+        let layerRect = CGRect(x: 20, y: 20, width: 200, height: 500)
+        gLayer.frame = layerRect
+        let c:[AnyObject] = [colorGreen, colorOrange, colorRed, colorBrightRed]
+        gLayer.colors = c
+        gLayer.locations = [0.2, 0.4, 0.6, 0.8]
+      
+        let path = UIBezierPath(roundedRect: layerRect, byRoundingCorners:  .TopRight | .TopLeft, cornerRadii: CGSize(width: 50, height: 50))
+        var mask = CAShapeLayer()
+        mask.path = path.CGPath
+        mask.fillColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5).CGColor
+        mask.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).CGColor
+        self.layer.insertSublayer(gLayer, atIndex: 1)
+        self.layer.insertSublayer(mask, atIndex: 2)
+        
+    }
+    required init(coder aDecoder: NSCoder){
+        super.init(coder: aDecoder)
+    }
+
+}
+
+//RK  you can make the path from two rects -- one bigger and one smaller using the odd even rule
 
 
-var aView = UIView()
-aView.frame = CGRect(x: 0,y: 0, width: 100, height: 200);
-aView.bounds = CGRectMake(0,0, 100, 200);
 
-var gLayer = CAGradientLayer()
-gLayer.frame = aView.frame
-let c:[AnyObject] = [colorTop,colorMiddle,colorBottom]
-gLayer.colors = c
-gLayer.locations = [0.0, 0.25, 0.8]
 
-gLayer
-aView.layer.insertSublayer(gLayer, atIndex: 1)
-aView
+var aView = stepBars(frame: CGRect(x: 0,y: 0, width: 300, height: 600))
+
+
+
+let layerRect = CGRect(x: 0, y: 0, width: 200, height: 500)
+var thisView = UIView(frame: layerRect)
+
+let path = UIBezierPath(roundedRect: layerRect, byRoundingCorners: .BottomRight | .BottomLeft | .TopRight | .TopLeft, cornerRadii: CGSize(width: 50, height: 50))
+var mask = CAShapeLayer()
+mask.path = path.CGPath
+thisView.layer.insertSublayer(mask, atIndex: 1)
+thisView
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

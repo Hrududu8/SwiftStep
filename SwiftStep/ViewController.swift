@@ -75,45 +75,35 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         println("print orientation changed")
         return
     }
-    /*
+    
     func barChartView(barChartView: JBBarChartView!, barViewAtIndex index: UInt) -> UIView! {
         //initialize colors
         
-        let colorBrightRed = UIColor(red: 0.965, green: 0.224, blue: 0.086, alpha: 1.0).CGColor  /*#f63916*/
-        let colorRed = UIColor(red: 0.647, green: 0.031, blue: 0.071, alpha: 1.0).CGColor /*#a50812*/
-        let colorOrange = UIColor(red: 0.8, green: 0.306, blue: 0.114, alpha: 1.0).CGColor /*#cc4e1d*/
-        let colorGreen = UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0).CGColor /*#486721*/
+        let colorBrightRed = UIColor(red: 0.647, green: 0.031, blue: 0.071, alpha: 1.0) /*#a50812*/
+        let colorRed = UIColor(red: 0.800, green: 0.031, blue: 0.071, alpha: 1.0)
+        let colorOrange = UIColor(red: 0.8, green: 0.306, blue: 0.114, alpha: 1.0) /*#cc4e1d*/
+        let colorGreen = UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0) /*#486721*/
         
-        //create gradient
         var aView = UIView()
         aView.frame = barChartView.bounds
-        var gLayer = CAGradientLayer()
-        gLayer.frame = aView.bounds
-        var c = [AnyObject]()
-        
         
         var threshold = myData.weeklyAverage < 10000 ? myData.weeklyAverage : 10000
         
         switch myData.stepValues[Int(index)] {
         case 0...2000:
-            c = [colorRed, colorBrightRed]
-            gLayer.locations = [0.2, 0.5]
+                aView.backgroundColor = colorBrightRed
         case 2001..<threshold:
-            c = [colorOrange, colorRed, colorBrightRed]
-            gLayer.locations = [0.2, 0.4, 0.8]
+            aView.backgroundColor = colorRed
         case threshold...10000:
-            c = [colorGreen, colorOrange, colorRed, colorBrightRed]
-            gLayer.locations = [0.2, 0.4, 0.6, 0.8]
+            aView.backgroundColor = colorOrange
         default:
-            c = [colorGreen, colorOrange, colorRed, colorBrightRed]
-            gLayer.locations = [0.2, 0.4, 0.6, 0.8]
+            aView.backgroundColor = colorGreen
         }
-        gLayer.colors = c
-        aView.layer.insertSublayer(gLayer, atIndex: 1)
+
         return aView
 
 }
-*/
+
     func barChartView(barChartView: JBBarChartView!, colorForBarViewAtIndex index: UInt) -> UIColor! {
         var color = UIColor()
         let threshold = myData.weeklyAverage < 10000 ? myData.weeklyAverage : 10000
@@ -128,7 +118,7 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
             UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0) /*#486721*/
         }
         let tempColor = UIColor.redColor()
-        return tempColor
+        return color
         
     }
 

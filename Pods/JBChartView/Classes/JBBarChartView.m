@@ -195,7 +195,7 @@ static UIColor *kJBBarChartViewDefaultBarColor = nil;
                 {
                     backgroundColor = kJBBarChartViewDefaultBarColor;
                 }
-
+                
                 barView.backgroundColor = backgroundColor;  //FIXME: this lines throws an exception
             }
 

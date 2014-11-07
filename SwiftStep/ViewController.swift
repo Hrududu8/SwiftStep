@@ -14,6 +14,38 @@ import CoreMotion
 let kNumberOfDaysToDisplayInPortraitView = 7
 let kNumberOfDaysToDisplayInLandscapeView = 30
 
+class RKBars : UIView {
+    override init(frame: CGRect) { super.init(frame: frame) }
+ 
+    init (stepValue: Double, average: Double, barChartView:  JBBarChartView){
+        super.init()
+        let colorBrightRed = UIColor(red: 0.647, green: 0.031, blue: 0.071, alpha: 1.0) /*#a50812*/
+        let colorRed = UIColor(red: 0.800, green: 0.031, blue: 0.071, alpha: 1.0)
+        let colorOrange = UIColor(red: 0.8, green: 0.306, blue: 0.114, alpha: 1.0) /*#cc4e1d*/
+        let colorGreen = UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0) /*#486721*/
+        
+        self.frame = barChartView.bounds
+        
+        var threshold = average < 10000 ? average : 10000
+        
+        switch stepValue {
+        case 0...2000:
+            self.backgroundColor = colorBrightRed
+        case 2001..<threshold:
+            self.backgroundColor = colorRed
+        case threshold...10000:
+            self.backgroundColor = colorOrange
+        default:
+            self.backgroundColor = colorGreen
+        }
+        
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
+
 extension UIViewController {
     func waitForOrientationChange(){
         var thisDevice = UIDevice.currentDevice()
@@ -76,32 +108,31 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         return
     }
     
-    func barChartView(barChartView: JBBarChartView!, barViewAtIndex index: UInt) -> UIView! {
+    func barChartView(barChartView: JBBarChartView!, barViewAtIndex index: UInt) -> UIView! { //tomorrow this gets move to its own subcloass of UIView
         //initialize colors
         
-        let colorBrightRed = UIColor(red: 0.647, green: 0.031, blue: 0.071, alpha: 1.0) /*#a50812*/
-        let colorRed = UIColor(red: 0.800, green: 0.031, blue: 0.071, alpha: 1.0)
-        let colorOrange = UIColor(red: 0.8, green: 0.306, blue: 0.114, alpha: 1.0) /*#cc4e1d*/
-        let colorGreen = UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0) /*#486721*/
-        
-        var aView = UIView()
-        aView.frame = barChartView.bounds
-        
-        var threshold = myData.weeklyAverage < 10000 ? myData.weeklyAverage : 10000
-        
-        switch myData.stepValues[Int(index)] {
-        case 0...2000:
-                aView.backgroundColor = colorBrightRed
-        case 2001..<threshold:
-            aView.backgroundColor = colorRed
-        case threshold...10000:
-            aView.backgroundColor = colorOrange
-        default:
-            aView.backgroundColor = colorGreen
-        }
+//        let colorBrightRed = UIColor(red: 0.647, green: 0.031, blue: 0.071, alpha: 1.0) /*#a50812*/
+//        let colorRed = UIColor(red: 0.800, green: 0.031, blue: 0.071, alpha: 1.0)
+//        let colorOrange = UIColor(red: 0.8, green: 0.306, blue: 0.114, alpha: 1.0) /*#cc4e1d*/
+//        let colorGreen = UIColor(red: 0.282, green: 0.404, blue: 0.129, alpha: 1.0) /*#486721*/
+//        
+//        var aView = UIView()
+//        aView.frame = barChartView.bounds
+//        
+//        var threshold = myData.weeklyAverage < 10000 ? myData.weeklyAverage : 10000
+//        
+//        switch myData.stepValues[Int(index)] {
+//        case 0...2000:
+//                aView.backgroundColor = colorBrightRed
+//        case 2001..<threshold:
+//            aView.backgroundColor = colorRed
+//        case threshold...10000:
+//            aView.backgroundColor = colorOrange
+//        default:
+//            aView.backgroundColor = colorGreen
+//        }
 
-        return aView
-
+        return RKBars(stepValue: myData.stepValues[Int(index)], average: myData.weeklyAverage, barChartView: barChartView)
 }
 
     func barChartView(barChartView: JBBarChartView!, colorForBarViewAtIndex index: UInt) -> UIColor! {

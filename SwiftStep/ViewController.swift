@@ -26,6 +26,9 @@ class RKBars : UIView {
         
         self.frame = barChartView.bounds
         
+        self.layer.cornerRadius = 8
+        self.layer.masksToBounds = true
+        
         var threshold = average < 10000 ? average : 10000
         
         switch stepValue {
@@ -39,11 +42,31 @@ class RKBars : UIView {
             self.backgroundColor = colorGreen
         }
         
+//        let path = UIBezierPath(roundedRect: self.frame, byRoundingCorners: .BottomRight | .BottomLeft | .TopRight | .TopLeft, cornerRadii: CGSize(width: 50, height: 50))
+//        var mask = CAShapeLayer()
+//        mask.path = path.CGPath
+//        self.layer.insertSublayer(mask, atIndex: 1)
+
+        
     }
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+   
+        
+        
+        
+//        CALayer(self.layer.sublayers[0].borderColor = UIColor.greenColor().CGColor
+//        self.layer.sublayers[0].border = 3.0
+////        
+//        var aRect = CGRect(x: 100, y: 100, width: 100, height: 200)
+//        aLayer.bounds = self.frame
+//        for var index = 0; index < arrayOfLayers.count; index++  { //why is the index coming back as some giant number???
+//            var tempLayer  = arrayOfLayers[index] as CALayer
+//            tempLayer.frame = self.frame //why can't you assign aLayer.frame??
+//        }
+    
 }
 
 extension UIViewController {
@@ -102,13 +125,11 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
             return UInt(kNumberOfDaysToDisplayInPortraitView)
         }
     }
-    func orientationChanged(sender: AnyObject){
-        swapControllersIfNeeded()
-        println("print orientation changed")
-        return
+    func barPaddingForBarChartView(barChartView: JBBarChartView!) -> UInt {
+        return 13
     }
     
-    func barChartView(barChartView: JBBarChartView!, barViewAtIndex index: UInt) -> UIView! { 
+    func barChartView(barChartView: JBBarChartView!, barViewAtIndex index: UInt) -> UIView! {
         
         return RKBars(stepValue: myData.stepValues[Int(index)], average: myData.weeklyAverage, barChartView: barChartView)
 }
@@ -130,7 +151,11 @@ class ViewController: UIViewController, JBBarChartViewDataSource, JBBarChartView
         return color
         
     }
-
+    func orientationChanged(sender: AnyObject){
+        swapControllersIfNeeded()
+        println("print orientation changed")
+        return
+    }
  
 
     override func viewDidLoad() { //maybe we should move the initialization of the data structures to the app delegate code??

@@ -1,7 +1,7 @@
 import UIKit
 import QuartzCore
 
-
+/*
 let circle = UIView();
 
 circle.bounds = CGRect(x: 0,y: 0, width: 100, height: 100);
@@ -31,7 +31,8 @@ circle // before stroke extended
 progressCircle.strokeEnd = 0.83;
 
 circle // after stroke end extended
-
+*/
+/*
 class stepBars: UIView {
     
     let colorBrightRed = UIColor(red: 0.965, green: 0.224, blue: 0.086, alpha: 1.0).CGColor  /*#f63916*/
@@ -82,6 +83,18 @@ var mask = CAShapeLayer()
 mask.path = path.CGPath
 thisView.layer.insertSublayer(mask, atIndex: 1)
 thisView
+
+*/
+
+
+var aView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 200))
+aView.backgroundColor = UIColor.greenColor()
+
+
+aView.layer.cornerRadius = 10
+aView.layer.backgroundColor = UIColor.blueColor().CGColor
+aView.layer.masksToBounds = true
+aView
 
 
 

@@ -7,22 +7,26 @@
 //
 
 import Foundation
+import CoreMotion
 
 //model class
 class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NSObject in order to use NSCoding
+    var operationQueue = NSOperationQueue()
+    var stepCounter = CMStepCounter()
     var thisWeeksData = [NSDate : Double]()
     var listOfDates = [NSDate]()
     var todayAtMidnight = NSDate()
     var stepData = [NSDate: Double]()
     var stepValues = [Double]()
     var weeklyAverage: Double {
-        let totalStepsThisWeek = stepValues.reduce(0, +)
+        let totalStepsThisWeek = stepValues.reduce(0, +) //so fancy
         return totalStepsThisWeek/7
     }
     
     override init(){
         super.init()
-        todayAtMidnight = getTodayAtMidnight()
+        let now = NSDate()
+        todayAtMidnight = getTodayAtMidnight(now)
         getThisWeeksDataStartingFrom(todayAtMidnight)
         for day in thisWeeksData.keys {
             stepData.updateValue(thisWeeksData[day]!, forKey: day)
@@ -78,7 +82,7 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
             self.listOfDates.append(newDay!)
             self.thisWeeksData[newDay!] = getData(newDay!)          }
     }
-    func getTodayAtMidnight()->(NSDate){
+    func getTodayAtMidnight(day: NSDate)->(NSDate){
         let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
         let now  = NSDate()
         let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: now)
@@ -91,12 +95,26 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         return myCalendar.dateFromComponents(midnightComponents)!
     }
     func getData(day: NSDate)->(Double){
-        //FIXME: fake data
-        //this will eventually be where the query to CoreMotion goes
-        
-        //this is a stub
-        return Double(arc4random()) % 12000
+        var valueToReturn = 0.0
+        if(CMStepCounter.isStepCountingAvailable() == true){
+            let now = NSDate()
+            stepCounter.queryStepCountStartingFrom(todayAtMidnight, to: now, toQueue: operationQueue, withHandler: { (numberOfSteps, error) -> Void in
+                if (error == true){
+                    println("error = \(error.localizedDescription)")
+                }
+                else
+                {
+                    
+                    valueToReturn = Double(numberOfSteps)
+                }
+                }
+                )
+        }
+        println("steps for \(day) = \(valueToReturn)") //why is this remaining zero??
+        return valueToReturn
     }
+    
+    
     func getNDaysOfDataAsArray(numberOfDays: Int)->[Double]{
         var dates = stepData.keys
         sorted(dates, isEarlier)
@@ -112,6 +130,11 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         }
         return false
     }
+   
+
 }
+
+
+
 
 

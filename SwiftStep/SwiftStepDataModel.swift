@@ -12,7 +12,7 @@ import CoreMotion
 //model class
 class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NSObject in order to use NSCoding
     var operationQueue = NSOperationQueue()
-    var stepCounter = CMStepCounter()
+    var stepCounter = CMPedometer()
     var thisWeeksData = [NSDate : Double]()
     var listOfDates = [NSDate]()
     var todayAtMidnight = NSDate()
@@ -96,22 +96,13 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
     }
     func getData(day: NSDate)->(Double){
         var valueToReturn = 0.0
-        if(CMStepCounter.isStepCountingAvailable() == true){
-            let now = NSDate()
-            stepCounter.queryStepCountStartingFrom(todayAtMidnight, to: now, toQueue: operationQueue, withHandler: { (numberOfSteps, error) -> Void in
-                if (error == true){
-                    println("error = \(error.localizedDescription)")
-                }
-                else
-                {
-                    
-                    valueToReturn = Double(numberOfSteps)
-                }
-                }
-                )
-        }
-        println("steps for \(day) = \(valueToReturn)") //why is this remaining zero??
-        return valueToReturn
+        let now = NSDate()
+        stepCounter.queryPedometerDataFromDate(todayAtMidnight, toDate: now, withHandler: {(CMPedometerData, NSError)->Void in
+            println("mmyellow")})
+            
+        
+         // this is a two step process -- you have to the handler has to add an operation to the queue; the operation has to update the number
+        return 200.0
     }
     
     

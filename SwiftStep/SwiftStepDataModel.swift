@@ -97,13 +97,16 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
     func getData(day: NSDate)->(Double){
         var valueToReturn = 0.0
         let now = NSDate()
-        stepCounter.queryPedometerDataFromDate(todayAtMidnight, toDate: now, withHandler: {(CMPedometerData, NSError)->Void in
-            println("mmyellow")})
+        stepCounter.queryPedometerDataFromDate(todayAtMidnight, toDate: now, withHandler: {(myCMPedometerData, myNSError)->Void in
+            if(myNSError != nil){
+                println("there was an error \(myNSError)")
+            }
+            valueToReturn = myCMPedometerData.numberOfSteps //is this returning nil because its on the simulator?
+            println("value was \(myCMPedometerData.numberOfSteps)")})
             
         
-         // this is a two step process -- you have to the handler has to add an operation to the queue; the operation has to update the number
-        return 200.0
-    }
+         return 200.0
+        }
     
     
     func getNDaysOfDataAsArray(numberOfDays: Int)->[Double]{

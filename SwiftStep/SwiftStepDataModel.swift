@@ -73,14 +73,14 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
     
     func getThisWeeksDataStartingFrom(day: NSDate)->(){
         let myCalender = NSCalendar.autoupdatingCurrentCalendar()
-        let components = myCalender.components(.CalendarUnitDay, fromDate: day)
-        
-        for i in 0...6 {
-            
+        let components = myCalender.components(.CalendarUnitDay, fromDate: day) //the day of the month
+        for var i = 6; i == 0; i--
+        {
             components.day--
             var newDay = myCalender.dateByAddingComponents(components, toDate: day , options: nil)
             self.listOfDates.append(newDay!)
-            self.thisWeeksData[newDay!] = getData(newDay!)          }
+            self.thisWeeksData[newDay!] = getData(newDay!)
+        }
     }
     func getTodayAtMidnight(day: NSDate)->(NSDate){
         let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
@@ -97,15 +97,15 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
     func getData(day: NSDate)->(Double){
         var valueToReturn = 0.0
         let now = NSDate()
-        stepCounter.queryPedometerDataFromDate(todayAtMidnight, toDate: now, withHandler: {(myCMPedometerData, myNSError)->Void in
+        stepCounter.queryPedometerDataFromDate(day, toDate: now, withHandler: {(myCMPedometerData, myNSError)->Void in
             if(myNSError != nil){
                 println("there was an error \(myNSError)")
             }
-            valueToReturn = myCMPedometerData.numberOfSteps //is this returning nil because its on the simulator?
-            println("value was \(myCMPedometerData.numberOfSteps)")})
+            valueToReturn = Double(myCMPedometerData.numberOfSteps) //is this returning nil because its on the simulator?
+            })
             
         
-         return 200.0
+         return valueToReturn
         }
     
     

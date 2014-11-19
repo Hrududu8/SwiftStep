@@ -74,15 +74,15 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
     func getThisWeeksDataStartingFrom(day: NSDate)->(){
         let myCalender = NSCalendar.autoupdatingCurrentCalendar()
         let components = myCalender.components(.CalendarUnitDay, fromDate: day) //the day of the month
-        for var i = 6; i == 0; i--
+        for i in stride(from: 6, through: 0, by: -1)
         {
             components.day--
-            var newDay = myCalender.dateByAddingComponents(components, toDate: day , options: nil)
+            var newDay = myCalender.dateByAddingComponents(components, toDate: day , options: nil) // this is adding the date of the month (e.g., 18 on Nov. 18) to the current day and querrying for the step count on e.g., Dec. 5 (=Nov. 18 + 18)
             self.listOfDates.append(newDay!)
             self.thisWeeksData[newDay!] = getData(newDay!)
         }
     }
-    func getTodayAtMidnight(day: NSDate)->(NSDate){
+    func getTodayAtMidnight(day: NSDate)->(NSDate){ //this needs to be refactored to getDateAtMidnightFrom(day: NSDate)
         let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
         let now  = NSDate()
         let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: now)

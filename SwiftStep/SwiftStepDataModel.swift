@@ -22,6 +22,10 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         let totalStepsThisWeek = stepValues.reduce(0, +) //so fancy
         return totalStepsThisWeek/7
     }
+    struct OneDay {
+        var start: NSDate
+        var end: NSDate
+    }
     
     override init(){
         super.init()
@@ -69,7 +73,24 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         coder.encodeObject(self.stepValues, forKey:"stepValues")
     }
     
-    
+    func makeOneDayFromDate(theDay: NSDate)->OneDay{
+        let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
+        let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: theDay)
+        var midnight01Components = NSDateComponents()
+        midnight01Components.year = components.year
+        midnight01Components.month = components.month
+        midnight01Components.day = components.day
+        midnight01Components.hour = 0
+        midnight01Components.minute = 1
+        var midnightComponents = NSDateComponents()
+        midnightComponents.year = components.year
+        midnightComponents.month = components.month
+        midnightComponents.day = components.day
+        midnightComponents.hour = 0
+        midnightComponents.minute = 0
+        
+        return OneDay(start: myCalendar.dateFromComponents(midnight01Components), end: myCalendar.dateFromComponents(midnightComponents))
+    }
     
     func getThisWeeksDataStartingFrom(day: NSDate)->(){
         let myCalender = NSCalendar.autoupdatingCurrentCalendar()

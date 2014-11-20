@@ -103,7 +103,11 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
             self.thisWeeksData[newDay!] = getData(newDay!)
         }
     }
-    func getTodayAtMidnight(day: NSDate)->(NSDate){ //this needs to be refactored to getDateAtMidnightFrom(day: NSDate)
+    
+    
+    
+    
+    func getTodayAtMidnight(day: NSDate)->(NSDate){
         let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
         let now  = NSDate()
         let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: now)

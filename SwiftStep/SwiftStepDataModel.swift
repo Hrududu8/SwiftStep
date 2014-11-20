@@ -101,12 +101,12 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
             if(myNSError != nil){
                 println("there was an error \(myNSError)")
             }
-            valueToReturn = Double(myCMPedometerData.numberOfSteps) //is this returning nil because its on the simulator?
+            //valueToReturn = Double(myCMPedometerData.numberOfSteps) //is this returning nil because its on the simulator?
             })
             
         
-         return valueToReturn
-        }
+         return Double(random()) % 20000
+    }
     
     
     func getNDaysOfDataAsArray(numberOfDays: Int)->[Double]{

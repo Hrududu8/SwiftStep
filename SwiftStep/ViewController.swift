@@ -41,11 +41,12 @@ class RKBars : UIView {
         default:
             self.backgroundColor = colorGreen
         }
+        var countLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        countLabel.text = "\(Int(stepValue))"
+        countLabel.font = UIFont.systemFontOfSize(9.0)
+        countLabel.textColor = UIColor.whiteColor()
+        self.addSubview(countLabel)
         
-//        let path = UIBezierPath(roundedRect: self.frame, byRoundingCorners: .BottomRight | .BottomLeft | .TopRight | .TopLeft, cornerRadii: CGSize(width: 50, height: 50))
-//        var mask = CAShapeLayer()
-//        mask.path = path.CGPath
-//        self.layer.insertSublayer(mask, atIndex: 1)
 
         
     }

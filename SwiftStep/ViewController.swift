@@ -42,8 +42,10 @@ class RKBars : UIView {
             self.backgroundColor = colorGreen
         }
         var countLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        countLabel.frame = self.frame
         countLabel.text = "\(Int(stepValue))"
-        countLabel.font = UIFont.systemFontOfSize(9.0)
+        countLabel.textAlignment = NSTextAlignment.Center
+            countLabel.font = UIFont.systemFontOfSize(9.0)
         countLabel.textColor = UIColor.whiteColor()
         self.addSubview(countLabel)
         

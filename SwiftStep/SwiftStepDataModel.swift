@@ -89,7 +89,7 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         midnightComponents.hour = 0
         midnightComponents.minute = 0
         
-        return OneDay(start: myCalendar.dateFromComponents(midnight01Components), end: myCalendar.dateFromComponents(midnightComponents))
+        return OneDay(start: myCalendar.dateFromComponents(midnight01Components)!, end: myCalendar.dateFromComponents(midnightComponents)!)
     }
     
     func getThisWeeksDataStartingFrom(day: NSDate)->(){

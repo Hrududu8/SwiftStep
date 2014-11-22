@@ -96,7 +96,38 @@ aView.layer.backgroundColor = UIColor.blueColor().CGColor
 aView.layer.masksToBounds = true
 aView
 
+extension NSDate {
+    func start()->NSDate{
+        let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
+        let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: self)
+        var midnightComponents = NSDateComponents()
+        midnightComponents.year = components.year
+        midnightComponents.month = components.month
+        midnightComponents.day = components.day
+        midnightComponents.hour = 0
+        midnightComponents.minute = 0
+        midnightComponents.second = 0
+        return myCalendar.dateFromComponents(midnightComponents)!
+    }
+    func end()->NSDate{
+        let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
+        let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: self)
+        var twentyThreeFiftyNine = NSDateComponents()
+        twentyThreeFiftyNine.year = components.year
+        twentyThreeFiftyNine.month = components.month
+        twentyThreeFiftyNine.day = components.day
+        twentyThreeFiftyNine.hour = 23
+        twentyThreeFiftyNine.minute = 59
+        twentyThreeFiftyNine.second = 59
+        return myCalendar.dateFromComponents(twentyThreeFiftyNine)!
+    }
+}
+let now = NSDate()
+now.start()
+now.end()
+let interval = now.end().timeIntervalSinceDate(now.start())
 
+let dayInSecs = 86400
 
 
 

@@ -9,8 +9,37 @@
 import Foundation
 import CoreMotion
 
+//convenince extension to make it easier to access midnight on a given day (day.start) and 11:59pm that day (day.end)
+extension NSDate {
+    func start()->NSDate{
+        let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
+        let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: self)
+        var midnightComponents = NSDateComponents()
+        midnightComponents.year = components.year
+        midnightComponents.month = components.month
+        midnightComponents.day = components.day
+        midnightComponents.hour = 0
+        midnightComponents.minute = 0
+        midnightComponents.second = 0
+        return myCalendar.dateFromComponents(midnightComponents)!
+    }
+    func end()->NSDate{
+        let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
+        let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: self)
+        var twentyThreeFiftyNine = NSDateComponents()
+        twentyThreeFiftyNine.year = components.year
+        twentyThreeFiftyNine.month = components.month
+        twentyThreeFiftyNine.day = components.day
+        twentyThreeFiftyNine.hour = 23
+        twentyThreeFiftyNine.minute = 59
+        twentyThreeFiftyNine.second = 59
+        return myCalendar.dateFromComponents(twentyThreeFiftyNine)!
+    }
+}
+
+
 //model class
-class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NSObject in order to use NSCoding
+ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NSObject in order to use NSCoding
     var operationQueue = NSOperationQueue()
     var stepCounter = CMPedometer()
     var thisWeeksData = [NSDate : Double]()
@@ -21,10 +50,6 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
     var weeklyAverage: Double {
         let totalStepsThisWeek = stepValues.reduce(0, +) //so fancy
         return totalStepsThisWeek/7
-    }
-    struct OneDay {
-        var start: NSDate
-        var end: NSDate
     }
     
     override init(){
@@ -62,7 +87,7 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         
         
     }
-    func encodeWithCoder(coder: NSCoder){
+     func encodeWithCoder(coder: NSCoder){
         coder.encodeObject(self.thisWeeksData, forKey:"thisWeeksData")
         coder.encodeObject(self.listOfDates, forKey:"listOfDates")
         
@@ -73,24 +98,7 @@ class SwiftStepDataModel: NSObject, NSCoding { //Does this need to conform to NS
         coder.encodeObject(self.stepValues, forKey:"stepValues")
     }
     
-    func makeOneDayFromDate(theDay: NSDate)->OneDay{
-        let myCalendar = NSCalendar.autoupdatingCurrentCalendar()
-        let components = myCalendar.components(.CalendarUnitYear | .CalendarUnitMonth | .CalendarUnitDay, fromDate: theDay)
-        var midnight01Components = NSDateComponents()
-        midnight01Components.year = components.year
-        midnight01Components.month = components.month
-        midnight01Components.day = components.day
-        midnight01Components.hour = 0
-        midnight01Components.minute = 1
-        var midnightComponents = NSDateComponents()
-        midnightComponents.year = components.year
-        midnightComponents.month = components.month
-        midnightComponents.day = components.day
-        midnightComponents.hour = 0
-        midnightComponents.minute = 0
-        
-        return OneDay(start: myCalendar.dateFromComponents(midnight01Components)!, end: myCalendar.dateFromComponents(midnightComponents)!)
-    }
+    
     
     func getThisWeeksDataStartingFrom(day: NSDate)->(){
         let myCalender = NSCalendar.autoupdatingCurrentCalendar()

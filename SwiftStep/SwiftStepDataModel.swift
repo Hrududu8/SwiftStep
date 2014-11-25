@@ -73,11 +73,11 @@ extension NSDate {
         if let unwrappedArrayOfDates: AnyObject = decoder.decodeObjectForKey("listOfDates") {
             self.listOfDates = unwrappedArrayOfDates as Array
         }
-        
+        /*
         if let unwrappedDate: AnyObject = decoder.decodeObjectForKey("todayAtMidnight") {
             self.todayAtMidnight = unwrappedDate as NSDate
         }
-        
+        */
         if let anotherUnWrappedDictionary: AnyObject = decoder.decodeObjectForKey("stepData"){
             self.stepData = anotherUnWrappedDictionary as Dictionary
         }

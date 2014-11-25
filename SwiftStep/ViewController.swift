@@ -56,6 +56,11 @@ class RKBars : UIView {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    override func layoutSubviews() {
+        var myLabel: UILabel = self.subviews[0] as UILabel
+        var frame = CGRect(x:0.0, y: 0.0, width: self.frame.width, height: 10.0)
+        myLabel.frame = frame
+    }
    
         
         
